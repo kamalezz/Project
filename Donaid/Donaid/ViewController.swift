@@ -13,7 +13,7 @@ import ParseUI
 class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate {
     
     var logInViewController: PFLogInViewController! = PFLogInViewController()
-    var signUpViewController: PFSignUpViewController! = PFSignUpViewController()
+   // var signUpViewController: PFSignUpViewController! = PFSignUpViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +25,24 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
         
         if (PFUser.currentUser() == nil) {
         
-            self.logInViewController.fields = PFLogInFields.UsernameAndPassword | PFLogInFields.LogInButton | PFLogInFields.SignUpButton | PFLogInFields.PasswordForgotten | PFLogInFields.DismissButton
-        
+            
+            var logInViewController = PFLogInViewController()
+            
+            logInViewController.fields = PFLogInFields.UsernameAndPassword | PFLogInFields.LogInButton | PFLogInFields.SignUpButton | PFLogInFields.PasswordForgotten | PFLogInFields.Twitter | PFLogInFields.Facebook | PFLogInFields.DismissButton
+            
+
+            logInViewController.delegate=self
+            
+            var signUpViewController = PFSignUpViewController()
+            signUpViewController.delegate=self
+            
+            logInViewController.signUpController = signUpViewController
+            
+            self.presentViewController(logInViewController
+                , animated: true, completion: nil)
+            
+          /*  self.logInViewController.fields = PFLogInFields.UsernameAndPassword | PFLogInFields.LogInButton | PFLogInFields.SignUpButton | PFLogInFields.PasswordForgotten | PFLogInFields.Twitter | PFLogInFields.Facebook
+            
                 var logInLogoTitle = UILabel()
                 logInLogoTitle.text = "Donaid"
             
@@ -38,10 +54,10 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
                 signUpLogoTitle.text = "Donaid"
             
             self.signUpViewController.signUpView?.logo=signUpLogoTitle
-            
+        
             self.signUpViewController.delegate = self
             
-            self.logInViewController.signUpController = self.signUpViewController
+            self.logInViewController.signUpController = self.signUpViewController */
         }
     }
 
@@ -105,14 +121,17 @@ class ViewController: UIViewController, PFLogInViewControllerDelegate, PFSignUpV
     }
     
     // Mark: Actions
-    
-    @IBAction func simpleAction (sender: AnyObject){
+  
+ @IBAction func simpleAction (sender: AnyObject){
+
         self.presentViewController(self.logInViewController, animated: true, completion: nil)
+        //self.performSegueWithIdentifier("Ready", sender: self)
     }
- /*
+
+    
     @IBAction func LogOut (sender: AnyObject){
+       
         PFUser.logOut()
-        
-    }*/
+    }
 }
 
